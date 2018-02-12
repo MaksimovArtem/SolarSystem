@@ -1,6 +1,6 @@
 #include "Screen.h"
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <SDL2/SDL.h>
 
 
@@ -86,7 +86,7 @@ void Screen::close()
   SDL_DestroyWindow(window);
 }
 
-SDL_Texture * Screen::LoadFile(std::string filename)
+SDL_Texture* Screen::LoadFile(std::string filename)
 {
   SDL_Surface *loadedImage = nullptr;
   SDL_Texture *texture = nullptr;
@@ -101,18 +101,19 @@ SDL_Texture * Screen::LoadFile(std::string filename)
     texture = SDL_CreateTextureFromSurface(renderer, loadedImage);
     SDL_FreeSurface(loadedImage);
   }
+  return texture;
 }
 
 void Screen::ApplySurface(int x_coord,
                           int y_coord,
-                          SDL_Texture *texture,
-                          SDL_Renderer *renderer)
+                          SDL_Texture* texture,
+                          SDL_Renderer* renderer)
 {
-  sdl_Rect position;// (0;0) is top left corner
+  SDL_Rect position;// (0;0) is top left corner
   // structure?! with 4 fields: x,y,w(idth), h(eight)
   position.x = x_coord;
   position.y = y_coord;
-  SDL_QueryTexture(texture, NULL,NULL, &pos.w, &pos.h)
-  SDL_RenderCopy(renderer, texture, NULL, &pos)
+  SDL_QueryTexture(texture, NULL,NULL, &position.w, &position.h);
+  SDL_RenderCopy(renderer, texture, NULL, &position);
 
 }

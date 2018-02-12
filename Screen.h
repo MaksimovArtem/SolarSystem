@@ -2,14 +2,15 @@
 #define SCREEN_H
 
 #include  <SDL2/SDL.h>
-#include  <cstring>
+#include  <string>
 
 class Screen
 {
 public:
   const static int SCREEN_HEIGHT = 600;
   const static int SCREEN_WIDTH = 800;
-private:
+
+public:
   SDL_Window *window;
   SDL_Renderer *renderer;
   SDL_Texture *texture;
@@ -22,9 +23,9 @@ public:
   void update();
   void close();
 
-  //if we want to use .bnp files
-  SDL_Texture* LoadFile(std::string filename);
-  void ApplySurface(int x, int y, SDL_Texture *texture, SDL_Renderer *renderer);
+  //if we want to use .bnp files;
+  SDL_Texture* LoadFile(std::string);
+  void ApplySurface(int x, int y, SDL_Texture*, SDL_Renderer*);
 
   ~Screen()=default;
 };

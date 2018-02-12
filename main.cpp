@@ -1,8 +1,9 @@
+
 #include "Screen.h"
 #include "SDL2/SDL.h"
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
-
+#include <cstring>
 
 int main() {
 
@@ -16,16 +17,26 @@ int main() {
     Screen screen;
     screen.init_window();
     screen.update();
-    SDL_Texture *sun = nullptr, *clap =nullptr;
-    sun = LoadFile("SunWithFace.bmp");
-    clap = LoadFile("Clap.bmp");
+
+    SDL_Texture *sun = nullptr, *clap = nullptr;
+    std::string Sun = "SunWithFace.bmp";
+    std::string Clap = "Clap.bmp";
+    sun = screen.LoadFile(Sun);
+    clap = screen.LoadFile(Clap);
 
     int iW,iH;
     SDL_QueryTexture(sun, NULL,NULL, &iW, &iH);
-    int x = SCREEN_WIDTH / 2 - 60;
-    int y = SCREEN_Height / 2 - 60;
-    ApplySurface(x,y,sun, renderer);
-    SDL_RenderPresent(renderer);
+    int x = screen.SCREEN_WIDTH / 2 - 60;
+    int y = screen.SCREEN_HEIGHT / 2;
+    screen.ApplySurface(x,y,sun, screen.renderer);
+    SDL_RenderPresent(screen.renderer);
+
+    int iW1,iH1;
+    SDL_QueryTexture(clap, NULL,NULL, &iW1, &iH1);
+    int x1 = screen.SCREEN_WIDTH / 2 + 60;
+    int y1 = screen.SCREEN_HEIGHT / 2;
+    screen.ApplySurface(x1,y1,clap, screen.renderer);
+    SDL_RenderPresent(screen.renderer);
 
     std::cin.get();
 
