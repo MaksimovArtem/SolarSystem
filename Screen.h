@@ -2,6 +2,7 @@
 #define SCREEN_H
 
 #include  <SDL2/SDL.h>
+
 #include  <string>
 
 class Screen
@@ -22,11 +23,11 @@ public:
   void init_window();
   void update();
   void close();
-
+  void add_planet_to_the_buffer(int x, int y, int radius,Uint32 color);
   //if we want to use .bnp files;
   SDL_Texture* LoadFile(std::string);
   void ApplySurface(int x, int y, SDL_Texture*, SDL_Renderer*);
-
+  //
   ~Screen()=default;
 };
 #endif//end of SCREEN_H

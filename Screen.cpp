@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 
 
-Screen::Screen():window(nullptr)//doesn't compile with nullptr?!
+Screen::Screen():window(nullptr)
 {};
 
 void Screen::init_window()
@@ -54,10 +54,22 @@ void Screen::init_window()
   }
 
   buffer = new Uint32[SCREEN_WIDTH*SCREEN_HEIGHT];
-  buffer[SCREEN_WIDTH*SCREEN_HEIGHT] = 0xFFFFFFFF;
 
-  std::cout<<"end init"<<std::endl;
-};
+  memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+}
+
+/*
+  for(int i = 0;i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+  {
+    int cntX=400, cntY=300;
+    if(i>(cntY-50) *SCREEN_WIDTH && i<(cntY+50)*SCREEN_WIDTH
+    && (i % SCREEN_WIDTH)>cntX-50 && (i % SCREEN_WIDTH)<cntX+50)
+    {
+      buffer[i]=0x00FF00FF;
+    }
+
+*/
+
 
 void Screen::update()
 {
@@ -84,6 +96,17 @@ void Screen::close()
   SDL_DestroyTexture(texture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+}
+
+void Screen::add_planet_to_the_buffer(int x_, int y_, int radius_, Uint32 color)
+{
+  for(int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+  {
+    int tmp_y = i/SCREEN_WIDTH;
+    int tmp_x = i%SCREEN_WIDTH;
+    if(sqrt((tmp_x-x_)*(tmp_x-x_) + (tmp_y-y_)*(tmp_y-y_)) <= radius_)
+      buffer[i] = color;
+  }
 }
 
 SDL_Texture* Screen::LoadFile(std::string filename)

@@ -1,5 +1,7 @@
 
 #include "Screen.h"
+#include "Particle.h"
+#include "Planet.h"
 #include "SDL2/SDL.h"
 #include <cstdio>
 #include <iostream>
@@ -16,34 +18,25 @@ int main() {
 
     Screen screen;
     screen.init_window();
+    Planet is_the_sun_a_planet(400,300,99999,50,0,0,0);
+    screen.add_planet_to_the_buffer(is_the_sun_a_planet.x_coord,
+                                    is_the_sun_a_planet.y_coord,
+                                    is_the_sun_a_planet.planet_radius,
+                                    0xFFFF00FF);
+
+      std::cout<<"end init"<<std::endl;
+    
+
     screen.update();
 
-    SDL_Texture *sun = nullptr, *clap = nullptr;
-    std::string Sun = "SunWithFace.bmp";
-    std::string Clap = "Clap.bmp";
-    sun = screen.LoadFile(Sun);
-    clap = screen.LoadFile(Clap);
-
-    int iW,iH;
-    SDL_QueryTexture(sun, NULL,NULL, &iW, &iH);
-    int x = screen.SCREEN_WIDTH / 2 - 60;
-    int y = screen.SCREEN_HEIGHT / 2;
-    screen.ApplySurface(x,y,sun, screen.renderer);
-    SDL_RenderPresent(screen.renderer);
-
-    int iW1,iH1;
-    SDL_QueryTexture(clap, NULL,NULL, &iW1, &iH1);
-    int x1 = screen.SCREEN_WIDTH / 2 + 60;
-    int y1 = screen.SCREEN_HEIGHT / 2;
-    screen.ApplySurface(x1,y1,clap, screen.renderer);
-    SDL_RenderPresent(screen.renderer);
 
     std::cin.get();
+
 
     screen.close();
     SDL_Quit();
 
-    printf("Quiting....\n");
+    std::cout << ("Quiting....\n");
   //  std::cin.get();
     return 0;
 }
