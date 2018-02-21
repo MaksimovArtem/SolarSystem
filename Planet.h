@@ -3,6 +3,7 @@
 
 #include "Particle.h"
 #include <vector>
+
 class Planet
 {
 //private://->public for work Kapp
@@ -16,14 +17,13 @@ public:
 
   Particle *massive_of_particles;
   //for the orbit
-  int orbit_radius;
-  int a;//  x^2 + y^2 = 1
-  int b;//  a^2   b^2
+  float a;//  x^2 + y^2 = 1
+  float b;//  a^2   b^2
 
   //std::vector<Planet&> Satellites;
 
 public:
-  Planet(int x,int y,float m,int r,int o_r,int a,int b);
+  Planet(int x,int y,float m,int r,float a,float b);
   ~Planet();
   void update();
 };

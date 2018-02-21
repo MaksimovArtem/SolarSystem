@@ -98,16 +98,7 @@ void Screen::close()
   SDL_DestroyWindow(window);
 }
 
-void Screen::add_planet_to_the_buffer(int x_, int y_, int radius_, Uint32 color)
-{
-  for(int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
-  {
-    int tmp_y = i/SCREEN_WIDTH;
-    int tmp_x = i%SCREEN_WIDTH;
-    if(sqrt((tmp_x-x_)*(tmp_x-x_) + (tmp_y-y_)*(tmp_y-y_)) <= radius_)
-      buffer[i] = color;
-  }
-}
+
 
 SDL_Texture* Screen::LoadFile(std::string filename)
 {

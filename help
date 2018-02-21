@@ -1,0 +1,1 @@
+g++ -std=c++11 main.cpp Screen.h Screen.cpp Particle.h Particle.cpp Planet.h Planet.cpp Universe.h Universe.cpp -lSDL2

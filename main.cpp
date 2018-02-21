@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "Particle.h"
 #include "Planet.h"
+#include "Universe.h"
 #include "SDL2/SDL.h"
 #include <cstdio>
 #include <iostream>
@@ -18,14 +19,35 @@ int main() {
 
     Screen screen;
     screen.init_window();
-    Planet is_the_sun_a_planet(400,300,99999,50,0,0,0);
-    screen.add_planet_to_the_buffer(is_the_sun_a_planet.x_coord,
-                                    is_the_sun_a_planet.y_coord,
-                                    is_the_sun_a_planet.planet_radius,
-                                    0xFFFF00FF);
+
+    Universe god;
+
+    Planet is_the_sun_a_planet(god.SUN_X_COORDINATE,
+                               god.SUN_Y_COORDINATE,
+                               99999,
+                               50,
+                               0,
+                               0);
+
+    float b_for_the_earth = sqrt(201);
+
+    Planet earth(600,
+                 300,
+                 4000,
+                 15,
+                 101.0,
+                 b_for_the_earth);
+
+    god.add_planet_to_the_buffer(is_the_sun_a_planet,
+                                 0xFFFF00FF,//yellow
+                                 screen);
+
+    god.add_planet_to_the_buffer(earth,
+                                 0x00FFFF10,//aqua
+                                 screen);
 
       std::cout<<"end init"<<std::endl;
-    
+
 
     screen.update();
 
