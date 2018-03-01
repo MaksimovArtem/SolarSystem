@@ -1,24 +1,29 @@
-/*#pragma once
-#include "Planet.h"
+#ifndef UNIVERSE_H_
+#define UNIVERSE_H_
+
+#include "Object.h"
 #include <vector>
-#include <iostream>
-#include <SFML/Graphics/Color.hpp>
 
-class Universe // manager
+class Universe
 {
-public:
-	const int SUN_X_COORDINATE = 500;
-	const int SUN_Y_COORDINATE = 300;
-
 private:
+	std::vector<Object*> objects;
+	const double dt = 0.003;
 
-	std::vector<Planet&> SolarSystem;
 public:
-
 	Universe() = default;
-	void add_planet(Planet&);
-	//void add_orbit_to_the_buffer(Planet&);
 	~Universe() = default;
 
+	void add(Object*);
 
-};*/
+	double getDistance(Object*, Object*);
+	bool is_collapse(Object*, Object*, double);
+
+	bool exist();
+
+	void updateObject(Object*, double, double);
+	void setObject(Object*);
+	Object* getObject(int);
+};
+
+#endif
