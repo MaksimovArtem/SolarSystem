@@ -1,0 +1,87 @@
+bool Universe::exist() {
+
+	for (int i = 0; i < objects.size();++i)
+	{
+		if (objects[i] == nullptr)
+		{
+			auto iter = objects.begin() + i;
+			objects.erase(iter);
+		}
+	}
+	//избавились от nullptr
+	if (objects.size() > 0)
+	{
+		auto i = objects.begin();
+		auto e = objects.begin() + objects.size() - 1;//итератор на предпоследний
+
+
+		while (i < e) {//все без последнего
+
+			auto j = i + 1;
+			while (j < objects.end()) {
+
+
+				if (*i != nullptr && *j != nullptr)
+				{
+					double r = getDistance(*i, *j);
+					if (r - 0.0 < 0.000001) {
+						cout << "divinition to zero!" << endl;
+						return false;
+					}
+
+					if (!is_collapse(*i, *j, r)) {
+
+						//FOR I
+						double a1 = (*j)->weight / pow(r, 2);
+
+						double ch_ax1 = a1 * ((*j)->x - (*i)->x) / r;///cos
+						double ch_ay1 = a1 * ((*j)->y - (*i)->y) / r;///sin
+
+						updateObject(*i, ch_ax1, ch_ay1);
+
+						//FOR J
+
+						double a2 = (*i)->weight / pow(r, 2);
+						double ch_ax2 = a2 * ((*i)->x - (*j)->x) / r;///cos
+						double ch_ay2 = a2 * ((*i)->y - (*j)->y) / r;///sin
+
+						updateObject(*j, ch_ax2, ch_ay2);
+
+					}
+					else {
+						if ((*i)->weight * sqrt((*i)->ax * (*i)->ax + (*i)->ay * (*i)->ay)
+							- (*j)->weight * sqrt((*j)->ax * (*j)->ax + (*j)->ay * (*j)->ay) > 0.0001) {
+							this->collapse(*j, *i);
+							*i = nullptr;
+						}
+						else {
+							this->collapse(*i, *j);
+							*j = nullptr;
+						}
+					}
+				}
+				++j;
+			}
+			if (*i != nullptr)
+				setObject(*i);
+			++i;
+		}
+
+
+		if (i < e && objects.size() > 0) {
+			auto l = objects.end() - 1;/////last object
+			if (*l != nullptr)
+				setObject(*l);
+		}
+	
+		for (auto q : objects)
+		{
+			if (q != nullptr)
+			{
+				q->changed_ax = 0;
+				q->changed_ay = 0;//////deleting makes it too fast
+			}
+		}
+	}
+	return true;
+}
